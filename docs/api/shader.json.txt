@@ -87,7 +87,7 @@
 
                     // idk what this means
                     "published": 0|1
-                }
+                }, ...
             ],
 
             // Render targets for this pass
