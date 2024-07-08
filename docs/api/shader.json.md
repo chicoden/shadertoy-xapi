@@ -1,0 +1,126 @@
+{
+    "ver": "0.1",
+
+    "info": {
+        // Unique shader identifier
+        "id": String,
+
+        // Stringified creation date unix timestamp
+        "date": String,
+
+        // Number of views received by the shader
+        "viewed": Integer,
+
+        // Shader title
+        "name": String,
+
+        // Username of the shader's creator
+        "username": String,
+
+        // Shader description
+        "description": String,
+
+        // Number of likes received by the shader
+        "likes": Integer,
+
+        // 0: private, 1: public, 2: unlisted, 3: public+api, 4: anonymous?
+        "published": 3,
+
+        // 0b<flagMusicStream><flagMultipass><flagKeyboard><flagSoundOutput><flagSoundInput><flagWebcam><flagVR>
+        "flags": Integer,
+
+        // 1 if preview should be used (to save long compile time), else 0
+        "usePreview": 0|1,
+
+        // List of tags describing the shader
+        "tags": String[],
+
+        // Doesn't really make sense in the context of the API
+        "hasliked": 0
+    },
+
+    "renderpass": [
+        {
+            // Channel inputs for this pass
+            "inputs": [
+                {
+                    // Unique ID for this input, may reference an output
+                    "id": Integer,
+
+                    // Either soundcloud URL or media path relative to https://www.shadertoy.com
+                    "src": String,
+
+                    "ctype": "texture" |
+                             "cubemap" |
+                             "volume" |
+                             "video" |
+                             "music" |
+                             "keyboard" |
+                             "webcam" |
+                             "mic" |
+                             "musicstream" |
+                             "buffer",
+
+                    // Index of the channel this input feeds to
+                    "channel": 0|1|2|3,
+
+                    // Information about the sampler
+                    "sampler": {
+                        // Which filter to use when sampling this input
+                        "filter": "nearest" |
+                                  "linear" |
+                                  "mipmap",
+
+                        // Whether to clamp or repeat the texture
+                        "wrap": "clamp" |
+                                "repeat",
+
+                        // Whether the texture needs to be flipped vertically or not
+                        "vflip": "false" | "true",
+
+                        // idk what exactly this means
+                        "srgb": "false" | "true",
+
+                        // Internal storage format
+                        "internal": "byte"
+                    },
+
+                    // idk what this means
+                    "published": 0|1
+                }
+            ],
+
+            // Render targets for this pass
+            // I've only ever seen one at most
+            "outputs": [
+                {
+                    // Unique ID used to reference this output
+                    "id": Integer,
+
+                    // Seemingly unused
+                    "channel": 0
+                }, ...
+            ],
+
+            // Shader GLSL code - minus shadertoy injected code
+            "code": String,
+
+            "name": "Common" |
+                    "Buffer A" |
+                    "Buffer B" |
+                    "Buffer C" |
+                    "Buffer D" |
+                    "Cube A" |
+                    "Image" |
+                    "Sound",
+
+            "description": "",
+
+            "type": "common" |
+                    "buffer" |
+                    "cubemap" |
+                    "image" |
+                    "sound"
+        }, ...
+    ]
+}

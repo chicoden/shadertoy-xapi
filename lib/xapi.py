@@ -55,6 +55,7 @@ class ShaderPrivacy(Enum):
     UNLISTED = 2
     PUBLIC = 1
     PUBLIC_API = 3
+    ANONYMOUS = 4
 
 class PlaylistPrivacy(Enum):
     PRIVATE = 0
@@ -199,7 +200,7 @@ class ShadertoySession:
 
         raise ShadertoyError(ErrorCode.OPERATION_FAILED)
 
-    def get_shaders(self, shader_ids):
+    def get_shaders(self, shader_ids, include_tags=True, include_user_like=True, include_parent_info=True):
         """
         Based on getAllShaders()
         doExportShader() only gets one but does it in the same way.
@@ -209,9 +210,9 @@ class ShadertoySession:
         response = self.session.post(
             "https://www.shadertoy.com/shadertoy", data=[
                 ("s", json.dumps({"shaders": [*shader_ids]})),
-                ("nt", "1"),
-                ("nl", "0"),
-                ("np", "0")
+                ("nt", "1" if include_tags else "0"),
+                ("nl", "1" if include_user_like else "0"),
+                ("np", "1" if include_parent_info else "0")
             ], headers={
                 "Referer": "https://www.shadertoy.com/profile/?show=shaders"
             }
